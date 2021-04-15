@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/Jakub/CLionProjects/BinaryRead/main.cpp
+iostream
+-
+fstream
+-
+cstdlib
+-
+cmath
+-
+vector
+-
+string
+-
+
