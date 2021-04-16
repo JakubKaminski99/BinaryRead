@@ -11,10 +11,6 @@ iostream
 -
 fstream
 -
-cstdlib
--
-cmath
--
 vector
 -
 string

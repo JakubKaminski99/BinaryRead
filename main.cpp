@@ -20,10 +20,7 @@ void readFile( std::string fileName, std::vector<Record> &records )
     file.seekg( 0, std::ios::end );
     int sizeFile = ( int ) file.tellg();
     file.seekg( 0, std::ios::beg );
-    int i
-    {
-        0
-    };
+    int i { 0 };
     while ( file.tellg() < sizeFile )
     {
         Record r;
