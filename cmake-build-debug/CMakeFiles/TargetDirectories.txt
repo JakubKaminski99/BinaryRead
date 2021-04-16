@@ -1,3 +1,0 @@
-C:/Users/Jakub/CLionProjects/BinaryRead/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Jakub/CLionProjects/BinaryRead/cmake-build-debug/CMakeFiles/BinaryRead.dir
-C:/Users/Jakub/CLionProjects/BinaryRead/cmake-build-debug/CMakeFiles/rebuild_cache.dir
