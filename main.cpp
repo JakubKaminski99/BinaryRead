@@ -13,7 +13,7 @@ struct Record
     long long fieldR;
 };
 
-void readFile( std::string fileName, std::vector<Record> &records )  //Odpowiada za odczyt pliku binarnego oraz zapis wektora
+void readFile( std::string fileName, std::vector<Record> &records )  //Odpowiada za odczyt pliku binarnego, zapis oraz przekazanie wektora z zapisanym odczytem
 {
     std::ifstream file;
     file.open( fileName, std::ios::in | std::ios::binary );
@@ -35,20 +35,20 @@ void readFile( std::string fileName, std::vector<Record> &records )  //Odpowiada
     file.close();
 }
 
-void writeFileCSV( std::string fileName, std::vector<Record> records )
+void writeFileCSV( std::string fileName, std::vector<Record> records ) //Odpowiada za zapis elementów A, D, E, G rekordu do pliku .csv używanego do arkuszy kalkulacyjnych
 {
     std::ofstream exitFile;
     exitFile.open( fileName );
     long long tmp{};
     for ( int i{ 0 }; i < records.size(); i++ )
     {
-        tmp = ( 0x3F800 & records.at( i ).fieldR ) >> 11;
-        exitFile << records.at( i ).intR << "," << records.at( i ).int32R << "," << records.at( i ).floatR << "," << tmp << std::endl;
+        tmp = ( 0x3F800 & records.at( i ).fieldR ) >> 11; //Zastosowanie maski bitowej do uzyskania elementu G z pola bitowego F
+        exitFile << records.at( i ).intR << "," << records.at( i ).int32R << "," << records.at( i ).floatR << "," << tmp << std::endl; //Zapisanie zgodnie z formatem CSV
     }
     exitFile.close();
 }
 
-void writeFileTxt( std::string fileName, std::vector<Record> records )
+void writeFileTxt( std::string fileName, std::vector<Record> records ) //Odpowiada za zapis komunikatu ukrytego w polach B rekordu do pliku .txt
 {
     std::ofstream exitFile;
     exitFile.open( fileName );
@@ -62,6 +62,6 @@ int main()
     std::vector<Record> records;
     readFile( "sample_data.bin", records );
     writeFileCSV( "exit.csv", records );
-    writeFileTxt( "B.txt", records );
+    writeFileTxt( "Bmessage.txt", records );
     return 0;
 }
