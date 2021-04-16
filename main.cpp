@@ -1,76 +1,72 @@
 #include <iostream>
 #include <fstream>
-#include <cstdlib>
-#include <cmath>
 #include <vector>
 #include <string>
 
-struct Record {
+struct Record
+{
+    short intR;
     char charR;
     char paddingR;
-    short intR;
     int int32R;
     float floatR;
     long long fieldR;
-
-    friend std::ostream &operator<<(std::ostream &os, const Record &record) {
-        os << "charR: " << record.charR << " paddingR: " << record.paddingR << " intR: " << record.intR << " int32R: "
-           << record.int32R << " floatR: " << record.floatR << " fieldR: " << record.fieldR;
-        return os;
-    }
 };
 
-void readFile(std::string fileName, std::vector<Record> &records) {
+void readFile( std::string fileName, std::vector<Record> &records )
+{
     std::ifstream file;
-    file.open(fileName, std::ios::in | std::ios::binary);
-    file.seekg(0, std::ios::end);
-    int sizeFile = (int) file.tellg();
-    file.seekg(0, std::ios::beg);
-    int i{0};
-    //std::cout << sizeFile << " gowno " << sizeR << " tgwsoja stara " << sizeof(Record) << " " << sizeof(short) << " " << sizeof(char) << " "<< sizeof(float) << " "<< sizeof(int) << " ";
-    while (file.tellg() < sizeFile) {
+    file.open( fileName, std::ios::in | std::ios::binary );
+    file.seekg( 0, std::ios::end );
+    int sizeFile = ( int ) file.tellg();
+    file.seekg( 0, std::ios::beg );
+    int i
+    {
+        0
+    };
+    while ( file.tellg() < sizeFile )
+    {
         Record r;
-        file.read(reinterpret_cast<char *>(&r.intR), sizeof(r.intR));
-        file.read(reinterpret_cast<char *>(&r.charR), sizeof(r.charR));
-        file.read(reinterpret_cast<char *>(&r.paddingR), sizeof(r.paddingR));
-        file.read(reinterpret_cast<char *>(&r.int32R), sizeof(r.int32R));
-        file.read(reinterpret_cast<char *>(&r.floatR), sizeof(r.floatR));
-        file.read(reinterpret_cast<char *>(&r.fieldR), sizeof(r.fieldR));
-        records.push_back(r);
-        //std::cout << r.intR << ", " << r.int32R << ", " << r.floatR << ", " << tmp << std::endl;
-        //std::cout << r.charR;
-        //std::cout << std::endl << std::endl << r << std::endl ;
-        //std::cout << records[i-1] ;
+        file.read( reinterpret_cast<char*> ( &r.intR ), sizeof( r.intR ));
+        file.read( reinterpret_cast<char*> ( &r.charR ), sizeof( r.charR ));
+        file.read( reinterpret_cast<char*> ( &r.paddingR ), sizeof( r.paddingR ));
+        file.read( reinterpret_cast<char*> ( &r.int32R ), sizeof( r.int32R ));
+        file.read( reinterpret_cast<char*> ( &r.floatR ), sizeof( r.floatR ));
+        file.read( reinterpret_cast<char*> ( &r.fieldR ), sizeof( r.fieldR ));
+        records.push_back( r );
     }
     file.close();
-//    for (int i{0}; i<records.size(); i++){
-//        std::cout << records.at(i).charR ;
-//    }
-
 }
 
-void writeFile(std::string fileName, std::vector<Record> records) {
+void writeFileCSV( std::string fileName, std::vector<Record> records )
+{
     std::ofstream exitFile;
-    exitFile.open(fileName);
+    exitFile.open( fileName );
     long long tmp{};
-    for (int i{0}; i < records.size(); i++) {
-        std::cout << records.at(i).charR;
-        tmp = (0x3F800 & records.at(i).fieldR) >> 11;
-        exitFile << records.at(i).intR << "," << records.at(i).int32R << "," << records.at(i).floatR << ","  << tmp << std::endl;
+    for ( int i{ 0 }; i < records.size(); i++ )
+    {
+        tmp = ( 0x3F800 & records.at( i ).fieldR ) >> 11;
+        exitFile << records.at( i ).intR << "," << records.at( i ).int32R << "," << records.at( i ).floatR << "," << tmp << std::endl;
     }
     exitFile.close();
-
 }
 
-int main() {
+void writeFileTxt( std::string fileName, std::vector<Record> records )
+{
+    std::ofstream exitFile;
+    exitFile.open( fileName );
+    for ( int i{0} ; i < records.size() ; i++ )
+        exitFile << records.at( i ).charR;
+    exitFile.close();
+}
 
+int main()
+{
     std::vector<Record> records;
-    readFile("sample_data.bin", records);
-    //std::cout << records.at(0).charR;
-    writeFile("exit.txt", records);
-
+    readFile( "sample_data.bin", records );
+    writeFileCSV( "exit.csv", records );
+    writeFileTxt( "B.txt", records );
     return 0;
-
 }
 
 
